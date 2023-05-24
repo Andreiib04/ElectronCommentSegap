@@ -1,0 +1,28 @@
+<head>
+
+</head>
+<body>
+    <form id="commentForm">
+        <div>
+            <label>Digite seu comentário no campo abaixo:</label>
+        </div>
+        <div>
+            <input autofocus />
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+
+        document.querySelector('#commentForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const { value } = document.querySelector('input');
+            ipcRenderer.send('addComment', value);
+        });
+
+        ipcRenderer.on('closeCommentWindow', () => {
+            window.close(); // Fecha a janela de comentários após receber a mensagem
+        });
+    </script>
+</body>
